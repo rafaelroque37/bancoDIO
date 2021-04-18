@@ -24,7 +24,7 @@ namespace DIO.Bank
 						Transferir();
 						break;
 					case "4":
-						Sacar();
+						Retirar();
 						break;
 					case "5":
 						Depositar();
@@ -42,6 +42,8 @@ namespace DIO.Bank
 			
 			Console.WriteLine("Obrigado por utilizar nossos serviços.");
 			Console.ReadLine();
+			System.Threading.Thread.Sleep(5000);
+			Console.Clear();
 		}
 
 		private static void Depositar()
@@ -55,7 +57,7 @@ namespace DIO.Bank
             listContas[indiceConta].Depositar(valorDeposito);
 		}
 
-		private static void Sacar()
+		private static void Retirar()
 		{
 			Console.Write("Digite o número da conta: ");
 			int indiceConta = int.Parse(Console.ReadLine());
@@ -63,7 +65,7 @@ namespace DIO.Bank
 			Console.Write("Digite o valor a ser sacado: ");
 			double valorSaque = double.Parse(Console.ReadLine());
 
-            listContas[indiceConta].Sacar(valorSaque); //método 'Sacar' dessa linha refere-se ao objeto, NÃO confundir com a classe Sacar do 'Program' principal
+            listContas[indiceConta].Sacar(valorSaque);
 		}
 
 		private static void Transferir()
@@ -85,7 +87,23 @@ namespace DIO.Bank
 			Console.WriteLine("Inserir nova conta");
 
 			Console.Write("Digite 1 para Conta Fisica ou 2 para Juridica: ");
+
 			int entradaTipoConta = int.Parse(Console.ReadLine());
+
+			bool sucessoEntrada = false;
+
+			while(sucessoEntrada == false)
+			{				
+				if(TipoConta.IsDefined(typeof(TipoConta), entradaTipoConta))
+				{
+					sucessoEntrada = true;
+				}
+				else
+				{
+					Console.WriteLine("Tipo de Conta Inválido, tente novamente.");
+					entradaTipoConta = int.Parse(Console.ReadLine());
+				}			
+			}
 
 			Console.Write("Digite o Nome do Cliente: ");
 			string entradaNome = Console.ReadLine();
